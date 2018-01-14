@@ -25,4 +25,5 @@ ONBUILD RUN /scripts/setup_nvm.sh
 ONBUILD ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
 ONBUILD ENV PATH=$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
+EXPOSE 3000
 ENTRYPOINT /home/app/scripts/start.sh

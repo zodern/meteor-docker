@@ -2,6 +2,7 @@
 set -e
 
 if [ -e /bundle/bundle.tar.gz ]; then
+  echo "Found /bundle/bundle.tar.gz"
   cd /bundle
 
   chmod 777 *.tar.gz
