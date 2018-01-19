@@ -3,6 +3,7 @@ docker build -t zodern/meteor:test ../image
 
 command -v meteor >/dev/null 2>&1 || { curl https://install.meteor.com/ | sh; }
 
+unset npm_config_prefix
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ]
 . "$NVM_DIR/nvm.sh"
