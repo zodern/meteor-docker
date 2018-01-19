@@ -13,7 +13,7 @@ USER app
 WORKDIR /home/app
 RUN mkdir scripts && mkdir setup
 COPY ./setup ./setup
-RUN setup/install_nvm.sh
+RUN bash setup/install_nvm.sh
 
 COPY ./scripts ./scripts
 
@@ -23,4 +23,4 @@ ONBUILD ENV NODE_PATH=/home/app/.onbuild-node/lib/node_modules
 ONBUILD ENV PATH=/home/app/.onbuild-node/bin:$PATH
 
 EXPOSE 3000
-ENTRYPOINT /home/app/scripts/start.sh
+ENTRYPOINT bash /home/app/scripts/start.sh
