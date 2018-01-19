@@ -1,5 +1,5 @@
 set -e
-docker build -t zodern/meteor:test ../meteor
+docker build -t zodern/meteor:test ../image
 
 command -v meteor >/dev/null 2>&1 || { curl https://install.meteor.com/ | sh; }
 
@@ -45,10 +45,6 @@ build_app_directory() {
 }
 
 test_bundle() {
-  echo "=> Archiving bundle"
-
-  # rm -rf ./archive/*
-  # tar -zcf ../archive/bundle.tar.gz ../bundle
   mv ../bundle/app.tar.gz ../bundle/bundle.tar.gz
 
   echo "=> Creating docker container"
@@ -63,28 +59,73 @@ test_bundle() {
     zodern/meteor:test
 }
 
+test_bundle_docker() {
+  NODE_VERSION=$(meteor node --version)
+
+  echo "=> Creating image"
+  mv ../bundle/app.tar.gz ../bundle/bundle.tar.gz  
+  cd ../bundle
+
+  cat <<EOT > Dockerfile
+FROM zodern/meteor:test
+COPY --chown=app:app ./bundle.tar.gz /bundle/bundle.tar.gz
+EOT
+
+  docker build --build-arg $NODE_VERSION -t zodern/meteor-test .
+  docker run --name meteor-docker-test \
+  -e "ROOT_URL=http://app.com" \
+  -p 3000:3000 \
+  -d \
+  zodern/meteor-test
+
+  cd ../app
+}
+
 test_built() {
   NODE_VERSION=$(meteor node --version)
   NPM_VERSION=$(meteor npm --version)
-  echo "NODE_VERSION=$NODE_VERSION"
-  echo "NPM_VERSION=$NPM_VERSION"
+  
   nvm install $NODE_VERSION >/dev/null
   nvm use $NODE_VERSION --silent
   npm i -g npm@$NPM_VERSION -q
- cd ../bundle/bundle/programs/server && npm install -q
- cd ../../../../app
+  
+  cd ../bundle/bundle/programs/server && npm install -q
+  cd ../../../../app
 
- docker run \
-  -v $PWD/../bundle/bundle:/built_app \
-  -e "ROOT_URL=http://localhost.com" \
+  docker run \
+   -v $PWD/../bundle/bundle:/built_app \
+   -e "ROOT_URL=http://localhost.com" \
+   -p 3000:3000 \
+   -d \
+   --name meteor-docker-test \
+   zodern/meteor:test
+}
+
+test_built_docker() {
+  NODE_VERSION=$(meteor node --version)
+
+  echo "=> Creating image"
+
+  cd ../bundle/bundle
+  cat <<EOT > Dockerfile
+FROM zodern/meteor:test
+COPY --chown=app:app . /built_app
+RUN echo \$PATH && echo "NODE_VERSION" && node --version && npm --version
+RUN cd /built_app/programs/server && npm install
+EOT
+
+  docker build --build-arg NODE_VERSION=$NODE_VERSION -t zodern/meteor-test .
+  docker run --name meteor-docker-test \
+  -e "ROOT_URL=http://app.com" \
   -p 3000:3000 \
   -d \
-  --name meteor-docker-test \
-  zodern/meteor:test
+  zodern/meteor-test
+
+  cd ../../app
 }
 
 verify() {
-  TIMEOUT=120
+  TIMEOUT=300
   elaspsed=0
   success=0
 
@@ -115,8 +156,16 @@ test_version() {
   test_bundle
   verify
 
+  build_app
+  test_bundle_docker
+  verify
+
   build_app_directory
   test_built $1
+  verify
+
+  build_app_directory
+  test_built_docker $1
   verify
 }
 

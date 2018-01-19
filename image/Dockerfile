@@ -15,15 +15,12 @@ RUN mkdir scripts && mkdir setup
 COPY ./setup ./setup
 RUN setup/install_nvm.sh
 
-COPY ./setup_nvm.sh scripts/setup_nvm.sh
-COPY ./start.sh scripts/start.sh
-COPY ./node-version.js scripts/node-version.js
+COPY ./scripts ./scripts
 
 ONBUILD ARG NODE_VERSION='4.8.4'
-ONBUILD ENV NVM_DIR /root/.nvm
-ONBUILD RUN /scripts/setup_nvm.sh
-ONBUILD ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
-ONBUILD ENV PATH=$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+ONBUILD RUN ./scripts/onbuild-node.sh
+ONBUILD ENV NODE_PATH=/home/app/.onbuild-node/lib/node_modules
+ONBUILD ENV PATH=/home/app/.onbuild-node/bin:$PATH
 
 EXPOSE 3000
 ENTRYPOINT /home/app/scripts/start.sh

@@ -1,9 +1,10 @@
 var versions = require('./versions.json');
+
 var { spawnSync, execSync } = require('child_process');
 
 var nvm = '. "$NVM_DIR/nvm.sh" && nvm';
 
-process.env.PATH += ':/home/app/.nvm'
+process.env.PATH += ':/home/app/.nvm';
 
 console.log('\nInstalling node versions');
 
@@ -35,5 +36,5 @@ for (var i = 0; i < versions.length; i++) {
     log(npmOutput);
   }
 
-  console.log(`\n Finished installing ${version.node}\n`)
+  console.log(`\n Finished installing ${version.node}\n`);
 }

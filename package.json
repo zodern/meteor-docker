@@ -1,0 +1,25 @@
+{
+  "name": "meteor-docker",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "pretest": "npm run lint",
+    "test": "cd tests && bash test.sh",
+    "lint": "eslint **/*.js",
+    "eslint": "eslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zodern/meteor-docker.git"
+  },
+  "author": "zodern",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zodern/meteor-docker/issues"
+  },
+  "homepage": "https://github.com/zodern/meteor-docker#readme",
+  "private": true,
+  "dependencies": {
+    "eslint": "^4.15.0"
+  }
+}
