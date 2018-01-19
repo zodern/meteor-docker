@@ -110,7 +110,6 @@ test_built_docker() {
   cat <<EOT > Dockerfile
 FROM zodern/meteor:test
 COPY --chown=app:app . /built_app
-RUN echo \$PATH && echo "NODE_VERSION" && node --version && npm --version
 RUN cd /built_app/programs/server && npm install
 EOT
 
