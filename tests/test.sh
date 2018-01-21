@@ -8,6 +8,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ]
 . "$NVM_DIR/nvm.sh"
 
+docker rm -f meteor-docker-test >/dev/null || true
+
 rm -rf /tmp/docker-meteor-tests
 mkdir /tmp/docker-meteor-tests
 cp -r ../ /tmp/docker-meteor-tests
@@ -19,8 +21,6 @@ rm -rf ./archive
 mkdir ./app
 mkdir ./bundle
 mkdir ./archive
-
-docker rm -f meteor-docker-test >/dev/null || true
 
 change_version() {
   echo "=> Creating app with $1"

@@ -1,8 +1,9 @@
 FROM debian:wheezy-slim
 LABEL maintainer="zodern"
-RUN apt-get update
-RUN apt-get install -y git curl python make build-essential bash
-RUN adduser --disabled-password --gecos "" app
+RUN apt-get update && \
+  apt-get install -y curl python make g++ ca-certificates --no-install-recommends && \
+  rm -rf /var/lib/apt/lists/*
+RUN useradd --create-home --shell /bin/bash --uid 1000 --user-group app
 
 RUN mkdir /built_app
 RUN mkdir /bundle
@@ -18,7 +19,7 @@ RUN bash setup/install_nvm.sh
 COPY ./scripts ./scripts
 
 ONBUILD ARG NODE_VERSION='4.8.4'
-ONBUILD RUN ./scripts/onbuild-node.sh
+ONBUILD RUN bash ./scripts/onbuild-node.sh
 ONBUILD ENV NODE_PATH=/home/app/.onbuild-node/lib/node_modules
 ONBUILD ENV PATH=/home/app/.onbuild-node/bin:$PATH
 

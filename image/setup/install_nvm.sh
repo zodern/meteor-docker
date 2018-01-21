@@ -17,3 +17,4 @@ nvm alias default $DEFAULT_VERSION
 nvm use $DEFAULT_VERSION
 
 nvm uninstall 8.4.0
+nvm cache clear
