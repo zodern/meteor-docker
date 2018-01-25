@@ -18,10 +18,12 @@ RUN bash setup/install_nvm.sh
 
 COPY ./scripts ./scripts
 
+ONBUILD USER app
 ONBUILD ARG NODE_VERSION='4.8.4'
 ONBUILD RUN bash ./scripts/onbuild-node.sh
 ONBUILD ENV NODE_PATH=/home/app/.onbuild-node/lib/node_modules
 ONBUILD ENV PATH=/home/app/.onbuild-node/bin:$PATH
 
+USER root
 EXPOSE 3000
-ENTRYPOINT bash /home/app/scripts/start.sh
+ENTRYPOINT bash /home/app/scripts/entry.sh

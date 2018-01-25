@@ -1,7 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 
-var logsEnabled = JSON.parse(process.env.DEBUG_NODE_VERSION || 'false');
+var logsEnabled = process.env.DEBUG_NODE_VERSION === '0';
 
 var logStream;
 if (logsEnabled) {

@@ -5,8 +5,8 @@ if [ -e /bundle/bundle.tar.gz ]; then
   echo "Found /bundle/bundle.tar.gz"
   cd /bundle
 
-  chmod 777 *.tar.gz
-  chown -R app:app *.tar.gz
+  chmod -v 777 bundle.tar.gz || true
+  chown -R app:app *.tar.gz || true
 
   echo "=> Extracting bundle"
   tar --no-same-owner -xzf bundle.tar.gz
@@ -29,4 +29,3 @@ fi
 export PORT=${PORT:-3000}
 echo "=> Starting meteor app on port $PORT"
 node main.js
- 
