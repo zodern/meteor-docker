@@ -79,6 +79,8 @@ docker run --name my-meteor-app -p 3000:3000 -e "ROOT_URL=http://app.com" meteor
 
 #### Volume
 
+If possible, you should create a docker image as described in the previous instructions since it is more reliable.
+
 First, make sure you have the correct version of node installed for the Meteor version your app uses, and then run
 
 ```bash

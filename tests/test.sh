@@ -3,11 +3,6 @@ docker build -t zodern/meteor:test ../image
 
 command -v meteor >/dev/null 2>&1 || { curl https://install.meteor.com/ | sh; }
 
-unset npm_config_prefix
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ]
-. "$NVM_DIR/nvm.sh"
-
 docker rm -f meteor-docker-test >/dev/null || true
 
 rm -rf /tmp/docker-meteor-tests
@@ -27,7 +22,7 @@ change_version() {
 
   cd ..
   rm -rf app
-  meteor create $1 app >/dev/null
+  meteor create $1 app
   cd app
   sleep 1
 
@@ -80,26 +75,6 @@ EOT
   zodern/meteor-test
 
   cd ../app
-}
-
-test_built() {
-  NODE_VERSION=$(meteor node --version)
-  NPM_VERSION=$(meteor npm --version)
-  
-  nvm install $NODE_VERSION >/dev/null
-  nvm use $NODE_VERSION --silent
-  npm i -g npm@$NPM_VERSION -q
-  
-  cd ../bundle/bundle/programs/server && npm install -q
-  cd ../../../../app
-
-  docker run \
-   -v $PWD/../bundle/bundle:/built_app \
-   -e "ROOT_URL=http://localhost.com" \
-   -p 3000:3000 \
-   -d \
-   --name meteor-docker-test \
-   zodern/meteor:test
 }
 
 test_built_docker() {
@@ -158,10 +133,6 @@ test_version() {
 
   build_app
   test_bundle_docker
-  verify
-
-  build_app_directory
-  test_built $1
   verify
 
   build_app_directory
