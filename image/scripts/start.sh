@@ -6,10 +6,13 @@ if [ -e /bundle/bundle.tar.gz ]; then
   cd /bundle
 
   chmod -v 777 bundle.tar.gz || true
-  chown -R app:app *.tar.gz || true
 
   echo "=> Extracting bundle"
-  tar --no-same-owner -xzf bundle.tar.gz
+
+  TAR_OPTIONS=$([ $EUID == 0 ] && echo "" || echo "--no-same-owner")
+  NPM_OPTIONS=$([ $EUID == 0 ] && echo " --unsafe-perm" || echo "")
+
+  tar $TAR_OPTIONS -xzf bundle.tar.gz
 
   cd /bundle/bundle
 
@@ -17,7 +20,7 @@ if [ -e /bundle/bundle.tar.gz ]; then
   . /home/app/scripts/setup_nvm.sh
 
   echo "=> Installing npm dependencies"
-  cd ./programs/server && npm install $NPM_INSTALL_OPTIONS
+  cd ./programs/server && npm install $NPM_OPTIONS $NPM_INSTALL_OPTIONS
 
   cd ../..
 else

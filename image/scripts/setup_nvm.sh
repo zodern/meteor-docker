@@ -1,9 +1,9 @@
 set -e
-export NVM_DIR="$HOME/.nvm"
+export NVM_DIR="/home/app/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ]
 . "$NVM_DIR/nvm.sh"
 
-NODE_VERSION="$(node $HOME/scripts/node-version.js)"
+NODE_VERSION="$(node /home/app/scripts/node-version.js)"
 echo "NODE_VERSION=$NODE_VERSION"
 
 if [[ $DEBUG_NODE_VERSION == "0" ]]; then

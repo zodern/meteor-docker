@@ -10,6 +10,12 @@ Docker image to run Meteor apps.
 - Runs app as non-root user
 - Compatible with Meteor up
 
+## Tags
+
+- `zodern/meteor:base`
+- `zodern/meteor:root` Same as the base, except runs the app as the root user. Notes below about permissions do not apply to this image.
+- `zodern/meteor:slim` Comming soon. Is a smaller image without node or npm preinstalled. During ONBUILD or when starting the app, it will install the correct version.
+
 ## How To Use
 
 ### Permissions
@@ -49,7 +55,7 @@ The `--build-arg NODE_VERSION=<node version>` is optional, and only needed if a 
 Run
 
 ```bash
-  docker run --name my-meteor-app -v /path/to/folder/with/bundle:/bundle -e "ROOT_URL=http://app.com" zodern/meteor
+  docker run --name my-meteor-app -v /path/to/folder/with/bundle:/bundle -p 3000:3000 -e "ROOT_URL=http://app.com" zodern/meteor
 ```
 
 ### Built app

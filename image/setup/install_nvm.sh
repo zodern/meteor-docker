@@ -3,7 +3,7 @@ set -e
 
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
 
-export NVM_DIR="$HOME/.nvm" 
+export NVM_DIR="/home/app/.nvm" 
 [ -s "$NVM_DIR/nvm.sh" ] 
 . "$NVM_DIR/nvm.sh"
 

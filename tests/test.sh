@@ -1,11 +1,12 @@
 set -e
-docker build -t zodern/meteor:test ../image
+docker build -t zodern/meteor ../image
+docker build -t zodern/meteor:root ../root-image
 
 command -v meteor >/dev/null 2>&1 || { curl https://install.meteor.com/ | sh; }
 
 docker rm -f meteor-docker-test >/dev/null || true
 
-rm -rf /tmp/docker-meteor-tests
+sudo rm -rf /tmp/docker-meteor-tests
 mkdir /tmp/docker-meteor-tests
 cp -r ../ /tmp/docker-meteor-tests
 cd /tmp/docker-meteor-tests/tests
@@ -17,21 +18,35 @@ mkdir ./app
 mkdir ./bundle
 mkdir ./archive
 
+# Shows output whe the command fails
+hide_output () {
+  file='./command_logs.txt'
+  rm -f "$file" || true
+  set +e
+  "$@"  > "$file" 2>&1
+  code=$?
+  set -e
+  [ "$code" -eq 0 ] || cat "$file"
+
+  return "$code"
+ }
+
 change_version() {
   echo "=> Creating app with $1"
 
   cd ..
   rm -rf app
-  meteor create $1 app
+  hide_output meteor create $1 app
   cd app
   sleep 1
 
   echo "=> npm install babel-runtime"
-  meteor npm install babel-runtime -q || true
+  hide_output meteor npm install babel-runtime -q || true
 }
 
 build_app() {
   echo "=> Building app"
+  sudo rm -rf /tmp/docker-meteor-tests/bundle || true
   meteor build ../bundle --debug
 }
 
@@ -41,33 +56,35 @@ build_app_directory() {
 }
 
 test_bundle() {
+  echo "=> Testing bundle volume"
   mv ../bundle/app.tar.gz ../bundle/bundle.tar.gz
 
-  echo "=> Creating docker container"
+  echo "==> Creating docker container"
 
   docker run \
-    -v $PWD/../bundle:/bundle \
+    -v "$PWD"/../bundle:/bundle \
     -e "ROOT_URL=http://localhost.com" \
     -e "NPM_INSTALL_OPTIONS=--no-bin-links" \
     -p 3000:3000 \
     -d \
     --name meteor-docker-test \
-    zodern/meteor:test
+    "$DOCKER_IMAGE"
 }
 
 test_bundle_docker() {
+  echo "=> Testing bundle image"
   NODE_VERSION=$(meteor node --version)
 
-  echo "=> Creating image"
+  echo "==> Creating image"
   mv ../bundle/app.tar.gz ../bundle/bundle.tar.gz  
   cd ../bundle
 
-  cat <<EOT > Dockerfile
-FROM zodern/meteor:test
-COPY --chown=app:app ./bundle.tar.gz /bundle/bundle.tar.gz
+  cat > Dockerfile << EOT
+FROM $DOCKER_IMAGE
+COPY ./bundle.tar.gz /bundle/bundle.tar.gz
 EOT
 
-  docker build --build-arg $NODE_VERSION -t zodern/meteor-test .
+  hide_output docker build --build-arg NODE_VERSION="$NODE_VERSION" -t zodern/meteor-test .
   docker run --name meteor-docker-test \
   -e "ROOT_URL=http://app.com" \
   -p 3000:3000 \
@@ -78,18 +95,19 @@ EOT
 }
 
 test_built_docker() {
+  echo "=> Testing built_app image"
   NODE_VERSION=$(meteor node --version)
 
-  echo "=> Creating image"
+  echo "==> Creating image"
 
   cd ../bundle/bundle
   cat <<EOT > Dockerfile
-FROM zodern/meteor:test
+FROM $DOCKER_IMAGE
 COPY --chown=app:app . /built_app
-RUN cd /built_app/programs/server && npm install
+RUN cd /built_app/programs/server && npm install $NPM_OPTIONS
 EOT
 
-  docker build --build-arg NODE_VERSION=$NODE_VERSION -t zodern/meteor-test .
+  hide_output docker build --build-arg NODE_VERSION="$NODE_VERSION" -t zodern/meteor-test .
   docker run --name meteor-docker-test \
   -e "ROOT_URL=http://app.com" \
   -p 3000:3000 \
@@ -120,12 +138,12 @@ verify() {
     exit 1
   fi
 
-  echo "SUCCESS $success"
+  echo "SUCCESS"
   docker rm -f meteor-docker-test >/dev/null || true
 }
 
 test_version() {
-  change_version $1
+  change_version "$1"
 
   build_app
   test_bundle
@@ -136,16 +154,28 @@ test_version() {
   verify
 
   build_app_directory
-  test_built_docker $1
+  test_built_docker "$1"
   verify
 }
 
-test_version "--release=1.2.1"
-test_version "--release=1.3.5.1"
-# test_version "--release=1.4"
-# test_version "--release=1.4.4.5"
-test_version "--release=1.5.4.1"
-test_version "--release=1.6"
+test_versions() {
+  echo "--- Testing Docker Image $DOCKER_IMAGE ---"
 
-# Latest version
-test_version
+  test_version "--release=1.2.1"
+  test_version "--release=1.3.5.1"
+  # test_version "--release=1.4"
+  # test_version "--release=1.4.4.5"
+  test_version "--release=1.5.4.1"
+  test_version "--release=1.6"
+
+  # Latest version
+  test_version
+}
+
+DOCKER_IMAGE="zodern/meteor"
+NPM_OPTIONS=""
+test_versions
+
+DOCKER_IMAGE="zodern/meteor:root"
+NPM_OPTIONS="--unsafe-perm"
+test_versions
