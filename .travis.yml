@@ -4,3 +4,16 @@ services:
 language: node_js
 node_js:
   - 8
+
+jobs:
+  include:
+     - stage: release
+       language: node_js
+       node_js: '8'
+       script:
+         - npm run release
+
+stages:
+  - test
+  - name: release
+    if: branch = master AND type = push AND fork = false
