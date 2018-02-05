@@ -8,7 +8,7 @@
   "publish": [
     {
       "path": "@semantic-release/exec",
-      "cmd": "./tests/publish.sh ${nextRelease.version}"
+      "cmd": "bash ./tests/publish.sh ${nextRelease.version}"
     },
     "@semantic-release/github"
   ]
