@@ -1,19 +1,20 @@
 sudo: required
 services:
-  - docker
+- docker
 language: node_js
 node_js:
-  - 8
-
+- 8
 jobs:
   include:
-     - stage: release
-       language: node_js
-       node_js: '8'
-       script:
-         - npm run release
-
+  - stage: release
+    language: node_js
+    node_js: '8'
+    script:
+    - npm run release
 stages:
-  - test
-  - name: release
-    if: branch = master AND type = push AND fork = false
+- test
+- name: release
+  if: branch = master AND type = push AND fork = false
+env:
+  global:
+    secure: Ev1wVm8CbYB8Z0lembKuryXbUnjYldtBOLReJebgXIEAtruqLb+K5JW+CZ/EHnC/7AkSNxkXDSMChXp8uRiaqJsOpvzNyWlgoUJ5UxGtUbSTRWK0OGQWA1XGtUrxbmoiBLlKhpbW8nvfvRRqSYQFzU3P3pebYJZQF8x0x6ZUn9+1kN/l3+VzWF5sOQqLkorzDDTUoGOnaJmcsivdvHoBBMkdyGHWhaQMZqS2EpD+xj8baTRDI4J5vpX6eaWwsmUN7LesURUzjSbJLSbPp7rOY4uVvUoSb+bOQWLKoNJRDtdrhj7m0qnRIlopU3OW6OLaR+Ty8buc94c9xYYDAUp1JjDJlnnNHugdTDs8UKaPNurppComjKPuXa0xvJBKzBBmamVnXXkfGWzCRZhCU0jKstJDyDw0wX0rdM9pwM6UoDi6dzrJCPxDznX+QouGswOaS+vhIE7UYYc5WaJkW/LAI/+z4Kd+W05IzHIYOyVTnsHuO33eZydL6oTcerhByn8tV75oVcNRLit/Ca4P5bns9lKgrccsWp3CIsu0NI+mVtvnrwSVJj/j1XEPDYMj7P2c4hj275adQCPH7K1OT12RyeKP2qPonzxnU16FXUHXRrDlQzQ2L0cRzh3GLeIH9ZkohY4lzxTEKbN6J+Zi3rF/Rms5pud6EJHoX+ftdIabaOQ=
