@@ -1,8 +1,15 @@
 FROM debian:wheezy-slim
 LABEL maintainer="zodern"
 RUN apt-get update && \
-  apt-get install -y curl python make g++ ca-certificates --no-install-recommends && \
+  apt-get install -y curl python make g++ bzip2 libfontconfig1 libfreetype6  ca-certificates --no-install-recommends && \
   rm -rf /var/lib/apt/lists/*
+RUN export VERSION="2.1.1" && \
+  curl -L -o ./phantomjs.tar.bz2 https://github.com/Medium/phantomjs/releases/download/v$VERSION/phantomjs-$VERSION-linux-x86_64.tar.bz2 && \
+  mkdir phantomjs && \
+  tar xvjf phantomjs.tar.bz2 -C ./phantomjs --strip-components=1  && \
+  mv phantomjs /usr/local/share && \
+  ln -sf /usr/local/share/phantomjs/bin/phantomjs /usr/local/bin && \
+  rm -rf ./phantomjs ./phantomjs.tar.bz2
 RUN useradd --create-home --shell /bin/bash --uid 1000 --user-group app
 
 RUN mkdir /built_app
