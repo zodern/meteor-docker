@@ -6,9 +6,12 @@ node_js:
 - 8
 jobs:
   include:
+  - stage: test
+    install:
+      - npm install
+    script:
+       - npm test
   - stage: release
-    language: node_js
-    node_js: '8'
     script:
     - npm run release
 stages:
