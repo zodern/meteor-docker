@@ -12,8 +12,8 @@ Docker image to run Meteor apps.
 
 ## Tags
 
-- `zodern/meteor:base`
-- `zodern/meteor:root` Same as the base, except runs the app as the root user. Notes below about permissions do not apply to this image.
+- `zodern/meteor`
+- `zodern/meteor:root` Same as the `zodern/meteor`, except runs the app as the root user. Notes below about permissions do not apply to this image.
 - `zodern/meteor:slim` Comming soon. Is a smaller image without node or npm preinstalled. During ONBUILD or when starting the app, it will install the correct version.
 
 ## How To Use
@@ -28,7 +28,7 @@ In your mup config, change `app.docker.image` to `zodern/meteor`.
 
 ### Compressed bundle
 
-You can create the bundle with the `meteor build` command.
+You can create the bundle with the `meteor build` command. The bundle should be available in the container at `/bundle/bundle.tar.gz`.
 
 #### Dockerfile
 
@@ -64,7 +64,9 @@ Run
 
 When using a compressed bundle, the bundle is decompressed and the app's npm dependencies are installed every time the app is started, which can take a while. By using this method instead, both steps are done before the container is started, allowing it to start much faster. Meteor up's `Prepare Bundle` feature uses this.
 
-Before following the instructions in either of the next two sections, build your app with `meteor build --directory ../path/to/put/bundle`
+Before following the instructions in either of the next two sections, build your app with `meteor build --directory ../path/to/put/bundle`.
+
+The bundle should be available in the container at `/built_app`.
 
 #### Docker Image
 
