@@ -13,8 +13,8 @@ Docker image to run Meteor apps.
 ## Tags
 
 - `zodern/meteor`
-- `zodern/meteor:root` Same as the `zodern/meteor`, except runs the app as the root user. Notes below about permissions do not apply to this image.
-- `zodern/meteor:slim` Comming soon. Is a smaller image without node or npm preinstalled. During ONBUILD or when starting the app, it will install the correct version.
+- `zodern/meteor:root` Compatible with meteord. Runs the app as the root user and has phantomjs installed. Notes below about permissions do not apply to this image.
+- `zodern/meteor:slim` Coming soon. Is a smaller image without node or npm pre-installed. During ONBUILD or when starting the app, it will install the correct version.
 
 ## How To Use
 
