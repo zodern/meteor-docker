@@ -1,4 +1,4 @@
-FROM debian:jessie-slim
+FROM debian:stretch-slim
 LABEL maintainer="zodern"
 RUN apt-get update && \
   apt-get install -y curl python make g++ bzip2 libfontconfig1 libfreetype6  ca-certificates --no-install-recommends && \
