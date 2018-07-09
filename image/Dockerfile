@@ -6,10 +6,13 @@ RUN apt-get update && \
 
 RUN useradd --create-home --shell /bin/bash --uid 1000 --user-group app
 
-RUN mkdir /built_app
-RUN mkdir /bundle
-RUN chown -R app:app /home/app/ && chown -R app:app /built_app && chown -R app:app /bundle
-RUN chmod 700 /built_app && chmod 700 /bundle
+RUN mkdir /built_app && \
+  mkdir /bundle && \
+  chown -R app:app /home/app/ && \
+  chown -R app:app /built_app && \
+  chown -R app:app /bundle && \
+  chmod 700 /built_app && \
+  chmod 700 /bundle
 
 USER app
 WORKDIR /home/app
@@ -22,8 +25,7 @@ COPY ./scripts ./scripts
 ONBUILD USER app
 ONBUILD ARG NODE_VERSION='4.8.4'
 ONBUILD RUN bash ./scripts/onbuild-node.sh
-ONBUILD ENV NODE_PATH=/home/app/.onbuild-node/lib/node_modules
-ONBUILD ENV PATH=/home/app/.onbuild-node/bin:$PATH
+ONBUILD ENV NODE_PATH=/home/app/.onbuild-node/lib/node_modules PATH=/home/app/.onbuild-node/bin:$PATH
 
 USER root
 EXPOSE 3000
