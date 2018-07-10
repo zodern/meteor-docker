@@ -15,8 +15,8 @@ change_user () {
 
 if [ -e /bundle/bundle.tar.gz ]; then
   cd /bundle
-  chown -R app:app *.tar.gz || true
   change_user
+  chown -R app:app *.tar.gz || true
 
 else
   cd /built_app
