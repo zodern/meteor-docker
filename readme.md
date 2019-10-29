@@ -42,13 +42,15 @@ COPY --chown=app:app ../path/to/bundle.tar.gz /bundle/bundle.tar.gz
 Then build and run the image with
 
 ```bash
-docker build --build-arg NODE_VERSION=<node version> -t meteor-app .
-docker run --name my-meteor-app meteor-app
+docker build --build_arg EXACT_NODE_VERSION=<true || false> --build-arg NODE_VERSION=<node version> -t meteor-app .
+docker run --env NODE_VERSION=<node version> --env EXACT_NODE_VERSION=<true || false> --name my-meteor-app meteor-app
 ```
 
 And your app will be running on port 3000
 
-The `--build-arg NODE_VERSION=<node version>` is optional, and only needed if a command in your docker file will use node or npm.
+The `(--build-arg || --env) NODE_VERSION=<node version>` is optional, and only needed if a command in your docker file will use specific node or npm version.
+The `(--build-arg || --env) EXACT_NODE_VERSION=<true || false>` is optional, and only needed if a command in your docker file or app need to use exact version of node or npm.
+Otherwise the closest possible version from `image/setup/versions.json` is used.
 
 #### Volume
 
