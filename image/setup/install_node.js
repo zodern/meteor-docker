@@ -26,7 +26,7 @@ for (var i = 0; i < versions.length; i++) {
     console.log('symlinking duplicate npm version');
     const prevVersion = versions[i - 1];
 
-    // This is only correct when the version.node is 0.10.x since nvm stores
+    // This is only correct when version.node is 0.10.x since nvm stores
     // newer versions in a different location
     const targetPath = `/home/app/.nvm/v${version.node}/lib/node_modules/npm`;
     execSync(`rm -rf ${targetPath}`);

@@ -23,7 +23,7 @@ RUN bash setup/install_nvm.sh
 COPY ./scripts ./scripts
 
 ONBUILD USER app
-ONBUILD ARG NODE_VERSION='4.8.4'
+ONBUILD ARG NODE_VERSION='8.17.0'
 ONBUILD ARG EXACT_NODE_VERSION=true
 ONBUILD RUN bash ./scripts/onbuild-node.sh
 ONBUILD ENV NODE_PATH=/home/app/.onbuild-node/lib/node_modules PATH=/home/app/.onbuild-node/bin:$PATH
