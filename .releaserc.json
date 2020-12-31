@@ -1,10 +1,9 @@
 {
-  "branch": "master",
+  "branches": "master",
   "repositoryUrl": "https://github.com/zodern/meteor-docker.git",
   "verifyConditions": [
     "@semantic-release/github"
   ],
-  "getLastRelease": "@semantic-release/git",
   "publish": [
     {
       "path": "@semantic-release/exec",

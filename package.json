@@ -21,9 +21,8 @@
   "homepage": "https://github.com/zodern/meteor-docker#readme",
   "private": true,
   "dependencies": {
-    "@semantic-release/exec": "^2.0.0",
-    "@semantic-release/git": "^2.2.0",
+    "@semantic-release/exec": "^5.0.0",
     "eslint": "^4.15.0",
-    "semantic-release": "^12.4.1"
+    "semantic-release": "^17.3.1"
   }
 }
