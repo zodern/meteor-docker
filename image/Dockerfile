@@ -29,5 +29,6 @@ ONBUILD RUN bash ./scripts/onbuild-node.sh
 ONBUILD ENV NODE_PATH=/home/app/.onbuild-node/lib/node_modules PATH=/home/app/.onbuild-node/bin:$PATH
 
 USER root
+RUN bash setup/setup_root_nvm.sh
 EXPOSE 3000
 ENTRYPOINT bash /home/app/scripts/entry.sh

@@ -11,4 +11,4 @@ if [[ $DEBUG_NODE_VERSION == "0" ]]; then
 fi
 
 nvm install $NODE_VERSION
-nvm use $NODE_VERSION
+nvm alias default $NODE_VERSION
