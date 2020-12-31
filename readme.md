@@ -48,9 +48,9 @@ docker run --env NODE_VERSION=<node version> --env EXACT_NODE_VERSION=<true || f
 
 And your app will be running on port 3000
 
-The `(--build-arg || --env) NODE_VERSION=<node version>` is optional, and only needed if a command in your docker file will use specific node or npm version.
-The `(--build-arg || --env) EXACT_NODE_VERSION=<true || false>` is optional, and only needed if a command in your docker file or app need to use exact version of node or npm.
-Otherwise the closest possible version from `image/setup/versions.json` is used.
+The `(--build-arg || --env) NODE_VERSION=<node version>` is optional, and only needed if a command in your docker file will use a specific node or npm version.
+
+If any Node versions in `image/setup/versions.json` match the same major version of Node your app needs, the version in `versions.json` is used instead since it will have additional security fixes missing in the version Meteor specifies. If there is no matching major version, it will use the exact version Meteor specifies. To always use the exact version, you can use set `(--build-arg || --env) EXACT_NODE_VERSION=true`
 
 #### Volume
 
