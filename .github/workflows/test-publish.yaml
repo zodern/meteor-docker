@@ -1,0 +1,48 @@
+name: Test-Publish
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: actions/cache@v2
+        name: Meteor cache
+        with:
+          path: ~/.meteor
+          key: ${{ runner.os }}-meteor-${{ hashFiles('tests/test.sh') }}
+          restore-keys: |
+            ${{ runner.os }}-meteor-
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: bash 
+
+
+  publish:
+    if: ${{ github.ref == 'refs/heads/master' }}
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Release
+        run: npm run release
