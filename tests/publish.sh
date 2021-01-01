@@ -1,6 +1,5 @@
+set -e
 VERSION="$1"
-
-docker login -p $DOCKER_PASSWORD -u $DOCKER_USERNAME
 
 # Normal image
 docker tag zodern/meteor zodern/meteor:latest

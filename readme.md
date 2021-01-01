@@ -1,6 +1,8 @@
 zodern/meteor Docker Image
 ===
 
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/zodern/meteor-docker/Test-Publish) ![Docker Pulls](https://img.shields.io/docker/pulls/zodern/meteor)
+
 Docker image to run Meteor apps.
 
 ### Features
@@ -12,15 +14,15 @@ Docker image to run Meteor apps.
 
 ## Tags
 
-- `zodern/meteor`
-- `zodern/meteor:root` Compatible with meteord. Runs the app as the root user and has phantomjs installed. Notes below about permissions do not apply to this image.
+- `zodern/meteor` The recommended version. Runs the app as a non-root user.
+- `zodern/meteor:root` Compatible with meteord. Runs the app as the root user and has phantomjs installed. Any notes below about permissions do not apply to this image.
 - `zodern/meteor:slim` Coming soon. Is a smaller image without node or npm pre-installed. During ONBUILD or when starting the app, it will install the correct version.
 
 ## How To Use
 
 ### Permissions
 
-This image runs the app with the `app` user. The owner of any files or folders your app uses should be changed to `app`.
+This image runs the app with the `app` user. The owner of any files or folders your app uses inside the Docker container should be changed to `app`.
 
 ### Meteor Up
 
