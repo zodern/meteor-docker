@@ -1,6 +1,8 @@
 zodern/meteor Docker Image
 ===
 
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/zodern/meteor-docker/Test-Publish) ![Docker Pulls](https://img.shields.io/docker/pulls/zodern/meteor)
+
 Docker image to run Meteor apps.
 
 ### Features
