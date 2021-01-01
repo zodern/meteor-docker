@@ -73,5 +73,5 @@ jobs:
 
       - name: Release
         run: npm run release
-         env:
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
