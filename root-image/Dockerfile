@@ -13,7 +13,7 @@ RUN export VERSION="2.1.1" && \
   rm -rf ./phantomjs ./phantomjs.tar.bz2
 ONBUILD USER root
 ONBUILD ARG NODE_VERSION='8.17.0'
-ONBUILD ARG EXACT_NODE_VERSION=true
+ONBUILD ARG EXACT_NODE_VERSION=false
 ONBUILD RUN bash ./scripts/onbuild-node.sh
 ONBUILD ENV NODE_PATH=/home/app/.onbuild-node/lib/node_modules
 ONBUILD ENV PATH=/home/app/.onbuild-node/bin:$PATH
