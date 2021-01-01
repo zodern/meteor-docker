@@ -31,6 +31,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-meteor-
 
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
+
       - name: Install Node.js
         uses: actions/setup-node@v1
         with:
