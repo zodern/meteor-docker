@@ -25,7 +25,7 @@ jobs:
         run: npm ci
 
       - name: Run tests
-        run: bash 
+        run: npm test 
 
 
   publish:
