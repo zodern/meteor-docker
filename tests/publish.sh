@@ -1,3 +1,4 @@
+set -e
 VERSION="$1"
 
 docker login -p $DOCKER_PASSWORD -u $DOCKER_USERNAME
