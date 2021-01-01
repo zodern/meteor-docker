@@ -32,7 +32,7 @@ hide_output () {
  }
 
 change_version() {
-  echo "=> Creating app with $1"
+  echo "=> Creating app with ${1:-"latest Meteor version"}"
 
   cd ..
   rm -rf app
@@ -161,22 +161,25 @@ test_version() {
 test_versions() {
   echo "--- Testing Docker Image $DOCKER_IMAGE ---"
 
-  test_version "--release=1.2.1"
-  test_version "--release=1.3.5.1"
-  # test_version "--release=1.4"
-  # test_version "--release=1.4.4.5"
-  test_version "--release=1.5.4.1"
-  test_version "--release=1.6.1.4"
-  test_version "--release=1.7.0.5"
-  test_version "--release=1.8.1"
-  test_version "--release=1.9.3"
-  test_version "--relese=1.10.2"
-  test_version "--release=1.11.1"
-  test_version "--release=1.12"
-  test_version "--release=2.0-beta.3"
+  if [[ -z ${METEOR_TEST_OPTION+x} ]]; then
+    test_version "--release=1.2.1"
+    test_version "--release=1.3.5.1"
+    # test_version "--release=1.4"
+    # test_version "--release=1.4.4.5"
+    test_version "--release=1.5.4.1"
+    test_version "--release=1.6.1.4"
+    test_version "--release=1.7.0.5"
+    test_version "--release=1.8.1"
+    test_version "--release=1.9.3"
+    test_version "--relese=1.10.2"
+    test_version "--release=1.11.1"
+    test_version "--release=2.0-beta.3"
 
-  # Latest version
-  test_version
+    # Latest version
+    test_version
+  else
+    test_version "$METEOR_TEST_OPTION"
+  fi
 }
 
 DOCKER_IMAGE="zodern/meteor"
