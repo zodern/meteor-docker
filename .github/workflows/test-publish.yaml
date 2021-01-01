@@ -14,7 +14,7 @@ jobs:
           - '--release=1.7.0.5'
           - '--release=1.8.1'
           - '--release=1.9.3'
-          - '--relese=1.10.2'
+          - '--release=1.10.2'
           - '--release=1.11.1'
           - '--release=2.0-beta.3'
           # Latest version

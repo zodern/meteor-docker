@@ -171,7 +171,7 @@ test_versions() {
     test_version "--release=1.7.0.5"
     test_version "--release=1.8.1"
     test_version "--release=1.9.3"
-    test_version "--relese=1.10.2"
+    test_version "--release=1.10.2"
     test_version "--release=1.11.1"
     test_version "--release=2.0-beta.3"
 
