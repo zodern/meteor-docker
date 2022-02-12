@@ -28,6 +28,16 @@ This image runs the app with the `app` user. The owner of any files or folders y
 
 In your mup config, change `app.docker.image` to `zodern/meteor`.
 
+If you want to use mup's `buildInstructions` option to run commands as root, you can do so by temporarily changing the user:
+
+```
+buildInstructions: [
+  'USER root',
+  'RUN apt-get update && apt-get install -y imagemagick graphicsmagick',
+  'USER app'
+]
+```
+
 ### Compressed bundle
 
 You can create the bundle with the `meteor build` command. The bundle should be available in the container at `/bundle/bundle.tar.gz`.
