@@ -38,10 +38,18 @@ change_version() {
   rm -rf app
   hide_output meteor create $1 app
   cd app
+
+  # Remove hot-module-replacement package since it causes errors with debug builds
+  sed -i -e '/hot-module-replacement/d' .meteor/packages
+
   sleep 1
 
   echo "=> npm install babel-runtime"
   hide_output meteor npm install babel-runtime -q || true
+
+  # At some point, the default app started creating Mongo collections
+  # Remove the default server code so we can test without Mongo
+  echo "" > ./server/main.js
 }
 
 build_app() {
