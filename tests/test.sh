@@ -164,8 +164,7 @@ test_versions() {
   if [[ -z ${METEOR_TEST_OPTION+x} ]]; then
     test_version "--release=1.2.1"
     test_version "--release=1.3.5.1"
-    # test_version "--release=1.4"
-    # test_version "--release=1.4.4.5"
+    test_version "--release=1.4.4.6"
     test_version "--release=1.5.4.1"
     test_version "--release=1.6.1.4"
     test_version "--release=1.7.0.5"
@@ -173,7 +172,12 @@ test_versions() {
     test_version "--release=1.9.3"
     test_version "--release=1.10.2"
     test_version "--release=1.11.1"
-    test_version "--release=2.0-beta.3"
+    test_version "--release=2.1.1"
+    test_version "--release=2.2"
+    test_version "--release=2.3.2"
+    test_version "--release=2.4.1"
+    test_version "--release=2.5.6"
+    test_version "--release=2.6"
 
     # Latest version
     test_version
@@ -181,6 +185,9 @@ test_versions() {
     test_version "$METEOR_TEST_OPTION"
   fi
 }
+
+# Needed for old Meteor versions
+export NODE_TLS_REJECT_UNAUTHORIZED=0
 
 DOCKER_IMAGE="zodern/meteor"
 NPM_OPTIONS=""
