@@ -188,6 +188,8 @@ test_versions() {
 
 # Needed for old Meteor versions
 export NODE_TLS_REJECT_UNAUTHORIZED=0
+# Fixes some Meteor versions crashing when creating a debug build 
+export DISABLE_REACT_FAST_REFRESH="true"
 
 DOCKER_IMAGE="zodern/meteor"
 NPM_OPTIONS=""
