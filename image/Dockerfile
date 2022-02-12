@@ -1,4 +1,4 @@
-FROM debian:stretch-slim
+FROM debian:bullseye-slim
 LABEL maintainer="zodern"
 RUN apt-get update && \
   apt-get install -y curl python make g++ bzip2 ca-certificates --no-install-recommends && \
