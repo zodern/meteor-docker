@@ -6,7 +6,6 @@
     "pretest": "npm run lint",
     "test": "cd tests && bash test.sh",
     "lint": "eslint **/*.js",
-    "eslint": "eslint",
     "release": "bash ./tests/prepare-release.sh"
   },
   "repository": {
@@ -21,8 +20,8 @@
   "homepage": "https://github.com/zodern/meteor-docker#readme",
   "private": true,
   "dependencies": {
-    "@semantic-release/exec": "^5.0.0",
+    "@semantic-release/exec": "^6.0.3",
     "eslint": "^4.15.0",
-    "semantic-release": "^17.3.1"
+    "semantic-release": "^19.0.2"
   }
 }
