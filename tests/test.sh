@@ -49,7 +49,9 @@ change_version() {
 
   # At some point, the default app started creating Mongo collections
   # Remove the default server code so we can test without Mongo
-  echo "" > ./server/main.js
+  if [ -f ./server/main.js ]; then
+    echo "" > ./server/main.js
+  fi
 }
 
 build_app() {
