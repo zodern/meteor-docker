@@ -9,6 +9,7 @@ jobs:
         meteorOptions:
           - '--release=1.2.1'
           - '--release=1.3.5.1'
+          - '--release=1.4.4.6'
           - '--release=1.5.4.1'
           - '--release=1.6.1.4'
           - '--release=1.7.0.5'
@@ -16,7 +17,12 @@ jobs:
           - '--release=1.9.3'
           - '--release=1.10.2'
           - '--release=1.11.1'
-          - '--release=2.0-beta.3'
+          - '--release=2.1.1'
+          - '--release=2.2'
+          - '--release=2.3.2'
+          - '--release=2.4.1'
+          - '--release=2.5.6'
+          - '--release=2.6'
           # Latest version
           - 
     steps:
