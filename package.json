@@ -21,7 +21,7 @@
   "private": true,
   "dependencies": {
     "@semantic-release/exec": "^6.0.3",
-    "eslint": "^4.15.0",
+    "eslint": "^8.13.0",
     "semantic-release": "^19.0.2"
   }
 }

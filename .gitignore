@@ -1,1 +1,5 @@
 node_modules
+
+# from tests
+bundle
+app
