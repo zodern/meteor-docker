@@ -28,6 +28,16 @@ This image runs the app with the `app` user. The owner of any files or folders y
 
 In your mup config, change `app.docker.image` to `zodern/meteor`.
 
+If you want to use mup's `buildInstructions` option to run commands as root, you can do so by temporarily changing the user:
+
+```
+buildInstructions: [
+  'USER root',
+  'RUN apt-get update && apt-get install -y imagemagick graphicsmagick',
+  'USER app'
+]
+```
+
 ### Compressed bundle
 
 You can create the bundle with the `meteor build` command. The bundle should be available in the container at `/bundle/bundle.tar.gz`.
@@ -112,3 +122,18 @@ docker run --name my-meteor-app -v /path/to/bundle:/built_app -p 3000:3000 -e "R
 #### NPM_INSTALL_OPTIONS
 
 When using a compressed bundle, you can specify the arguments used when running `npm install` by setting the environment variable `NPM_INSTALL_OPTIONS`.
+
+## Contributing
+
+Tests can be run with `npm test`. The tests can not be run on Windows, though WSL does work. Docker should be installed before running the tests.
+
+Commit messages should start with one of these to allow the changelog and version to be updated correctly:
+
+- `fix:` fixes a bug
+- `feat:` adds a feature
+- `perf:`
+- `docs:`
+- `chore:` 
+- `ci:`
+
+If the change is a breaking change, add `BREAKING CHANGE:` to the commit description
