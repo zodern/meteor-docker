@@ -24,8 +24,10 @@ if [[ $MAJOR_NODE_VERSION == "14" && $MINOR_NODE_VERSION -ge 21 ]]; then
   NEW_PATH="/tmp/node-v$NODE_VERSION-linux-x64/bin"
   export PATH="$NEW_PATH:$PATH"
   echo "PATH=$NEW_PATH:\$PATH" >> ~/.bashrc
+  export NODE_PATH=$NEW_PATH
 else
   echo "Using NVM"
   nvm install $NODE_VERSION
   nvm alias default $NODE_VERSION
+  export NODE_PATH=$(dirname $(nvm which $(node --version)))
 fi
