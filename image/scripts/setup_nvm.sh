@@ -4,6 +4,8 @@ export NVM_DIR="/home/app/.nvm"
 . "$NVM_DIR/nvm.sh"
 
 NODE_VERSION="$(node /home/app/scripts/node-version.js)"
+# Replace a possible 'v' prefix
+NODE_VERSION="$(echo $NODE_VERSION | sed 's/^v//')"
 echo "NODE_VERSION=$NODE_VERSION"
 
 if [[ $DEBUG_NODE_VERSION == "0" ]]; then
