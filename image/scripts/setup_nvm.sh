@@ -14,12 +14,11 @@ fi
 
 MAJOR_NODE_VERSION=`echo $NODE_VERSION | awk -F. '{print $1}'`
 MINOR_NODE_VERSION=`echo $NODE_VERSION | awk -F. '{print $2}'`
+PATCH_NODE_VERSION=`echo $NODE_VERSION | awk -F. '{print $3}'`
 
-echo "Node: $NODE_VERSION"
-echo "Major: $MAJOR_NODE_VERSION"
-echo "Minor: $MINOR_NODE_VERSION"
+echo "Node: $NODE_VERSION (parsed: $MAJOR_NODE_VERSION.$MINOR_NODE_VERSION.$PATCH_NODE_VERSION)"
 
-if [[ $MAJOR_NODE_VERSION == "14" && $MINOR_NODE_VERSION -ge 21 ]]; then
+if [[ $MAJOR_NODE_VERSION == "14" && $MINOR_NODE_VERSION -ge 21 && $PATCH_NODE_VERSION -ge 4 ]]; then
   ENV_PATH=/tmp/node_env.sh
   touch $ENV_PATH
   source $ENV_PATH
