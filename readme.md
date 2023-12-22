@@ -7,7 +7,8 @@ Docker image to run Meteor apps.
 
 ### Features
 
-- One image supports every Meteor version
+- One image supports every Meteor version (tested with 1.2 - 2.13 and newer)
+- Mostly supports Meteor 3 (requires making `programs/server/shrinkwrap.json` [writable](https://github.com/meteor/meteor/issues/12932) due to a bug in Meteor 3)
 - Automatically uses correct node and npm version
 - Runs app as non-root user
 - Compatible with Meteor up
