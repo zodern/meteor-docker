@@ -188,6 +188,13 @@ test_versions() {
     test_version "--release=2.4.1"
     test_version "--release=2.5.6"
     test_version "--release=2.6"
+    test_version "--release=2.7"
+    test_version "--release=2.8.0"
+    test_version "--release=2.9.0"
+    test_version "--release=2.10.0"
+    test_version "--release=2.11.0"
+    test_version "--release=2.12"
+    test_version "--release=2.13.3"
 
     # Latest version
     test_version

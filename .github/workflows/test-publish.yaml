@@ -1,5 +1,9 @@
 name: Test-Publish
-on: push
+on:
+  push:
+    branches:
+      - master
+  pull_request:
 
 jobs:
   test:
@@ -24,6 +28,13 @@ jobs:
           - '--release=2.4.1'
           - '--release=2.5.6'
           - '--release=2.6'
+          - '--release=2.7'
+          - '--release=2.8.0'
+          - '--release=2.9.0'
+          - '--release=2.10.0'
+          - '--release=2.11.0'
+          - '--release=2.12'
+          - '--release=2.13.3'
           # Latest version
           - 
     steps:
