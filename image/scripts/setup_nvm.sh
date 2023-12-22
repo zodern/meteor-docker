@@ -19,30 +19,23 @@ PATCH_NODE_VERSION=`echo $NODE_VERSION | awk -F. '{print $3}'`
 echo "Node: $NODE_VERSION (parsed: $MAJOR_NODE_VERSION.$MINOR_NODE_VERSION.$PATCH_NODE_VERSION)"
 
 if [[ $MAJOR_NODE_VERSION == "14" && $MINOR_NODE_VERSION -ge 21 && $PATCH_NODE_VERSION -ge 4 ]]; then
-  ENV_PATH=/tmp/node_env.sh
-  touch $ENV_PATH
-  source $ENV_PATH
+  NODE_INSTALL_PATH="/home/app/.nvm/versions/node/v$NODE_VERSION"
 
-  if [[ $(node --version) == $INSTALLED_NODE_VERSION ]]; then
-    echo "The correct Node version is already installed ($(node --version))"
+  if [ -f $NODE_INSTALL_PATH ]; then
+    echo "Meteor's custom v14 LTS Node version is already installed ($NODE_VERSION)"
   else
     echo "Using Meteor's custom NodeJS v14 LTS version"
+
     # https://hub.docker.com/layers/meteor/node/14.21.4/images/sha256-f4e19b4169ff617118f78866c2ffe392a7ef44d4e30f2f9fc31eef2c35ceebf3?context=explore
     curl "https://static.meteor.com/dev-bundle-node-os/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" | tar xzf - -C /tmp/
-    NEW_PATH="/tmp/node-v$NODE_VERSION-linux-x64/bin"
-    # Save the new config to all environments
-    echo "export PATH=$NEW_PATH:\$PATH" >> $ENV_PATH
-    echo ". $ENV_PATH" >> ~/.shinit
-    echo ". $ENV_PATH" >> ~/.bashrc
-    . $ENV_PATH
-    # Save installed Node version
-    echo "export INSTALLED_NODE_VERSION=$(node --version)" >> $ENV_PATH
-    # Set Node path for onbuild-node.sh
-    export NODE_PATH=$NEW_PATH
+    mv /tmp/node-v$NODE_VERSION-linux-x64 $NODE_INSTALL_PATH
   fi
+
+  nvm use $NODE_VERSION
 else
   echo "Using NVM"
   nvm install $NODE_VERSION
-  nvm alias default $NODE_VERSION
-  export NODE_PATH=$(dirname $(nvm which $(node --version)))
 fi
+
+nvm alias default $NODE_VERSION
+export NODE_PATH=$(dirname $(nvm which $(node --version)))
