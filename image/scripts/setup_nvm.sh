@@ -21,7 +21,7 @@ echo "Node: $NODE_VERSION (parsed: $MAJOR_NODE_VERSION.$MINOR_NODE_VERSION.$PATC
 if [[ $MAJOR_NODE_VERSION == "14" && $MINOR_NODE_VERSION -ge 21 && $PATCH_NODE_VERSION -ge 4 ]]; then
   NODE_INSTALL_PATH="/home/app/.nvm/versions/node/v$NODE_VERSION"
 
-  if [ -f $NODE_INSTALL_PATH ]; then
+  if [ -d $NODE_INSTALL_PATH ]; then
     echo "Meteor's custom v14 LTS Node version is already installed ($NODE_VERSION)"
   else
     echo "Using Meteor's custom NodeJS v14 LTS version"
