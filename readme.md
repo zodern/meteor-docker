@@ -55,7 +55,7 @@ COPY --chown=app:app ../path/to/bundle.tar.gz /bundle/bundle.tar.gz
 Then build and run the image with
 
 ```bash
-docker build --build_arg EXACT_NODE_VERSION=<true || false> --build-arg NODE_VERSION=<node version> -t meteor-app .
+docker build --build-arg EXACT_NODE_VERSION=<true || false> --build-arg NODE_VERSION=<node version> -t meteor-app .
 docker run --env NODE_VERSION=<node version> --env EXACT_NODE_VERSION=<true || false> --name my-meteor-app meteor-app
 ```
 
